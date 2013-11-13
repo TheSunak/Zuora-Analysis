@@ -3,7 +3,7 @@
 require 'awesome_print'
 require 'csv'
 
-raw_data = CSV.read('Users/vishal/code/Zuora-Analysis/test/test_data.csv')
+raw_data = CSV.read('/Users/vishal/code/Zuora-Analysis/test/test_data.csv')
 
 final_data = []
 
