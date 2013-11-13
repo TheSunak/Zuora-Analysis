@@ -5,7 +5,7 @@ require 'csv'
 
 raw_data = CSV.read('/Users/vishal/code/Zuora-Analysis/test/test_data.csv')
 
-final_data = []
+$final_data = []
 
 
 def get_rate_plan_effective_start_date (row)
@@ -36,17 +36,16 @@ def compare_dates(current_date, previous_date)
 end
 
 def store_results(seats, mrr)
-final_data << [seats, mrr]
+	final_data << [seats, mrr]
 
 end
-
-
-
 
 
 previous_account_number = ""
 previous_rate_plan_effective_start_date = ""
 previous_rate_plan_charge_mrr = ""
+
+# DON'T FORGET THE SUBSCRIPTION DATE CHANGE WITH YEAR!!!!!!!!!!!!!!!!!!!!!!!
 
 raw_data.each do |row|
 
@@ -55,37 +54,45 @@ raw_data.each do |row|
 
 	#Same account
 	if (previous_account_number == current_row_account_number)
-		p "Current rate plan start date"
-		p current_rate_plan_effective_start_date = get_rate_plan_effective_start_date(row)
+		#p "Current rate plan start date"
+		 current_rate_plan_effective_start_date = get_rate_plan_effective_start_date(row)
 		
-		p "Current rate plan charge mrr"
-		p current_rate_plan_charge_mrr = get_rate_plan_charge_mrr(row)
+		#p "Current rate plan charge mrr"
+		 current_rate_plan_charge_mrr = get_rate_plan_charge_mrr(row)
 
-		p "Current Seats"
-		p current_seats = get_number_of_seats(row)
+		#p "Current Seats"
+		 current_seats = get_number_of_seats(row)
 
-		p "Data to use:"
-		p data_to_use = compare_dates(current_rate_plan_effective_start_date, previous_rate_plan_effective_start_date)
+		#p "Data to use:"
+		 data_to_use = compare_dates(current_rate_plan_effective_start_date, previous_rate_plan_effective_start_date)
 
-		store_results 
+
+
+		if (data_to_use == "Previous")
+			#p "Previous"
+			p previous_seats,previous_rate_plan_charge_mrr
+		else
+			#p "Current"
+			 p current_seats,current_rate_plan_charge_mrr
+		end
+			
 
 
 	#New Row, just store the data	
 	else
-		p "Previous Account Number"
-		p previous_account_number = row[1]
+		#p "Previous Account Number"
+		 previous_account_number = row[1]
 
-		p "Previous rate plan start date"
-		p previous_rate_plan_effective_start_date = get_rate_plan_effective_start_date(row)
+		#p "Previous rate plan start date"
+		 previous_rate_plan_effective_start_date = get_rate_plan_effective_start_date(row)
 		
-		p "Previous rate plan charge mrr"
-		p previous_rate_plan_charge_mrr = get_rate_plan_charge_mrr(row)
+		#p "Previous rate plan charge mrr"
+		 previous_rate_plan_charge_mrr = get_rate_plan_charge_mrr(row)
 
-		p "Previous Seats"
-		p previous_seats = get_number_of_seats(row)
+		#p "Previous Seats"
+		 previous_seats = get_number_of_seats(row)
 
 	end
-
 
 end
 
