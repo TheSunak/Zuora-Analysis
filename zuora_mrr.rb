@@ -16,11 +16,7 @@ class ZuoraMRR
 		current_row_data = {:account_number => row[1], :rate_plan_start_date => row[7], :seats => row[4], :mrr => row[8], :subscription_date => row[13], :plan => row[11] }
 	end
 
-
-
-
-
-	def process_rows
+	def group_by_account_number
 		all_data = []
 		
 		raw_data.each do |row|
@@ -32,11 +28,27 @@ class ZuoraMRR
 
 	end
 
+	def determine_oldest_record (grouped_accounts)
+			
+			dates = grouped_accounts.collect { |k,v| v.collect{|value| value[:rate_plan_start_date]}}
+
+			ap dates.max
+
+			
+
+
+	
+	end
+
+ 
+
 end
 
 if ARGV.size == 1
 	z = ZuoraMRR.new(ARGV.first)
-	ap grouped_accounts = z.process_rows
+	grouped_accounts = z.group_by_account_number
+	z.determine_oldest_record(grouped_accounts)
+
 else
 	puts "Please enter a path"
 end
