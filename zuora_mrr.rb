@@ -3,7 +3,6 @@
 require 'awesome_print'
 require 'csv'
 
-
 class ZuoraMRR
 
 	attr_reader :raw_data, :account_data
@@ -30,7 +29,7 @@ class ZuoraMRR
 		dates = grouped_accounts.collect do |k,v|
 			v.collect{|value| value[:rate_plan_start_date]}
 		end
-		
+
 		ap dates.max
 	end
 
